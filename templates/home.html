@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Camisetas</title>
+    <style>
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .camiseta-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .camiseta-table th,
+        .camiseta-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .camiseta-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        
+        .camiseta-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .nombre-link {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .nombre-link:hover {
+            color: #3498db;
+            text-decoration: underline;
+        }
+        
+        .precio {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .mini-imagen {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Camisetas</h1>
+        
+        {% if Camisetas %}
+            <table class="camiseta-table">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Equipo</th>
+                        <th>Temporada</th>
+                        <th>Talla</th>
+                        <th>Precio</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for camiseta in Camisetas %}
+                    <tr>
+                        <td>
+                            {% if camiseta.imagen %}
+                                <img src="{{ camiseta.imagen.url }}" alt="{{ camiseta.nombre }}" class="mini-imagen">
+                            {% else %}
+                                <span style="color: #999;">-</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'camiseta_detail' camiseta.pk %}" class="nombre-link">
+                                {{ camiseta.nombre }}
+                            </a>
+                        </td>
+                        <td>{{ camiseta.equipo }}</td>
+                        <td>{{ camiseta.temporada }}</td>
+                        <td>{{ camiseta.get_talla_display }}</td>
+                        <td class="precio">${{ camiseta.precio }}</td>
+                        <td>
+                            {% if camiseta.vendido %}
+                                <span style="color: #e74c3c;">Vendido</span>
+                            {% elif not camiseta.publicado %}
+                                <span style="color: #f39c12;">No publicado</span>
+                            {% else %}
+                                <span style="color: #27ae60;">Disponible</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-state">
+                <p>No hay artículos disponibles</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

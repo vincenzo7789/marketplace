@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ camiseta.nombre }}</title>
+    <style>
+        .camiseta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .camiseta-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .camiseta-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+        .camiseta-image {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .camiseta-info {
+            padding: 20px;
+        }
+        .camiseta-field {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .camiseta-field strong {
+            display: inline-block;
+            width: 120px;
+            color: #333;
+        }
+        .precio {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .estado {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .publicado {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .vendido {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .no-publicado {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .back-button:hover {
+            background-color: #2980b9;
+        }
+        @media (max-width: 768px) {
+            .camiseta-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="camiseta-container">
+        <!-- Botón para volver -->
+        <a href="{% url 'lista_productos' %}" class="back-button">← Volver a la lista</a>
+        
+        <div class="camiseta-header">
+            <h1>{{ camiseta.nombre }}</h1>
+            
+            <!-- Estados -->
+            <div style="margin-bottom: 20px;">
+                {% if camiseta.publicado %}
+                    <span class="estado publicado">Publicado</span>
+                {% else %}
+                    <span class="estado no-publicado">No publicado</span>
+                {% endif %}
+                
+                {% if camiseta.vendido %}
+                    <span class="estado vendido">Vendido</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="camiseta-content">
+            <!-- Imagen de la camiseta -->
+            <div>
+                {% if camiseta.imagen %}
+                    <img src="{{ camiseta.imagen.url }}" alt="{{ camiseta.nombre }}" class="camiseta-image">
+                {% else %}
+                    <div style="background: #f8f9fa; padding: 100px; text-align: center; border-radius: 8px;">
+                        Imagen no disponible
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Información de la camiseta -->
+            <div class="camiseta-info">
+                <div class="camiseta-field">
+                    <strong>Equipo:</strong>
+                    <span>{{ camiseta.equipo }}</span>
+                </div>
+                
+                <div class="camiseta-field">
+                    <strong>Temporada:</strong>
+                    <span>{{ camiseta.temporada }}</span>
+                </div>
+                
+                <div class="camiseta-field">
+                    <strong>Talla:</strong>
+                    <span>{{ camiseta.get_talla_display }}</span>
+                </div>
+                
+                <div class="camiseta-field precio">
+                    <strong>Precio:</strong>
+                    <span>${{ camiseta.precio }}</span>
+                </div>
+                
+                <div class="camiseta-field">
+                    <strong>Descripción:</strong>
+                    <p style="margin-top: 10px;">{{ camiseta.descripcion }}</p>
+                </div>
+                
+                <div class="camiseta-field">
+                    <strong>Fecha creación:</strong>
+                    <span>{{ camiseta.fecha_creacion|date:"d/m/Y H:i" }}</span>
+                </div>
+                
+                <div class="camiseta-field">
+                    <strong>Última actualización:</strong>
+                    <span>{{ camiseta.fecha_actualizacion|date:"d/m/Y H:i" }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div style="margin-top: 30px; text-align: center;">
+            {% if not camiseta.vendido and camiseta.publicado %}
+                <button style="padding: 12px 30px; background-color: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                    Comprar ahora
+                </button>
+            {% elif camiseta.vendido %}
+                <button style="padding: 12px 30px; background-color: #95a5a6; color: white; border: none; border-radius: 5px; cursor: not-allowed; font-size: 16px;" disabled>
+                    Producto vendido
+                </button>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,3 +1,5 @@
+{% extends 'includes/navbar.html'%}
+{% block content %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -43,7 +45,7 @@
         .precio {
             font-size: 1.5em;
             font-weight: bold;
-            color: #e74c3c;
+            color: #070707;
         }
         .estado {
             display: inline-block;
@@ -75,9 +77,58 @@
         .back-button:hover {
             background-color: #2980b9;
         }
+        .action-buttons {
+            margin-top: 30px;
+            text-align: center;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .btn-warning {
+            background-color: #f39c12;
+        }
+        .btn-warning:hover {
+            background-color: #e67e22;
+        }
+        .btn-primary {
+            background-color: #27ae60;
+        }
+        .btn-primary:hover {
+            background-color: #219a52;
+        }
+        .btn-secondary {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        .btn-danger {
+            background-color: #e74c3c;
+        }
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
         @media (max-width: 768px) {
             .camiseta-content {
                 grid-template-columns: 1fr;
+            }
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .btn {
+                width: 100%;
+                max-width: 300px;
             }
         }
     </style>
@@ -156,17 +207,28 @@
         </div>
 
         <!-- Botones de acción -->
-        <div style="margin-top: 30px; text-align: center;">
+        <div class="action-buttons">
+            <!-- Botón para editar -->
+            <a href="{% url 'camiseta_update' camiseta.pk %}" class="btn btn-warning">
+                ✏️ Editar Producto
+            </a>
+            
+            <!-- Botón para eliminar -->
+            <a href="{% url 'camiseta_delete' camiseta.pk %}" class="btn btn-danger">
+                🗑️ Eliminar Producto
+            </a>
+            
             {% if not camiseta.vendido and camiseta.publicado %}
-                <button style="padding: 12px 30px; background-color: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
-                    Comprar ahora
+                <button class="btn btn-primary">
+                    🛒 Comprar ahora
                 </button>
             {% elif camiseta.vendido %}
-                <button style="padding: 12px 30px; background-color: #95a5a6; color: white; border: none; border-radius: 5px; cursor: not-allowed; font-size: 16px;" disabled>
-                    Producto vendido
+                <button class="btn btn-secondary" disabled>
+                    ❌ Producto vendido
                 </button>
             {% endif %}
         </div>
     </div>
 </body>
 </html>
+{% endblock %}

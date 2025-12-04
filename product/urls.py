@@ -6,5 +6,5 @@ urlpatterns = [
     path('camiseta/<int:pk>/', CamisetaDetailView.as_view(), name='camiseta_detail'),
     path('crear/', CamisetaCreateView.as_view(), name='camiseta_create'),
     path('editar/<int:pk>/', CamisetaUpdateView.as_view(), name='camiseta_update'),
-    path('eliminar/<int:pk>/', CamisetaDeleteView.as_view(), name='camiseta_delete'),
+    path('eliminar/<int:pk>/', CamisetaDeleteView.as_view(), name='camiseta_delete'),  
 ]

@@ -5,13 +5,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ camiseta.nombre }}</title>
+    <title>Consigue la camiseta de tus sueños</title>
     <style>
         .camiseta-container {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Fondo claro para contraste con texto negro */
         }
         .camiseta-header {
             text-align: center;
@@ -31,21 +32,26 @@
         }
         .camiseta-info {
             padding: 20px;
+            color: #000000 !important; 
         }
         .camiseta-field {
             margin-bottom: 15px;
             padding: 10px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #000000; 
         }
         .camiseta-field strong {
             display: inline-block;
             width: 120px;
-            color: #333;
+            color: #000000; 
+        }
+        .camiseta-field span,
+        .camiseta-field p {
+            color: #000000; 
         }
         .precio {
             font-size: 1.5em;
             font-weight: bold;
-            color: #070707;
+            color: #ffffff;
         }
         .estado {
             display: inline-block;
@@ -113,10 +119,13 @@
             cursor: not-allowed;
         }
         .btn-danger {
-            background-color: #e74c3c;
+            background-color: #0f0f0f;
         }
         .btn-danger:hover {
-            background-color: #c0392b;
+            background-color: #0a0a0a;
+        }
+        h1 {
+            color: #000000; 
         }
         @media (max-width: 768px) {
             .camiseta-content {

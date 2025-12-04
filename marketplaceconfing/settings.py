@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'product',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -117,7 +118,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Directorios adicionales donde Django buscará archivos estáticos
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -125,3 +131,22 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#redireccion de Login y Logout
+LOGIN_REDIRECT_URL = "lista_productos"
+
+# settings.py
+
+# Redirección después de login/logout
+LOGIN_REDIRECT_URL = "lista_productos"  
+LOGOUT_REDIRECT_URL = "lista_productos"   
+LOGIN_URL = 'login'
+
+# Para mostrar mensajes después de logout
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.SUCCESS: 'alert-success',
+    messages.ERROR: 'alert-danger',
+    messages.WARNING: 'alert-warning',
+    messages.INFO: 'alert-info',
+}
